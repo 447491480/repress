@@ -1,0 +1,23 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "sessions",
+    "logs",
+    "node_modules",
+    "public"
+  ],
+  "verbose": true,
+  "execMap": {
+    "js": "node --harmony"
+  },
+  "events": {
+  },
+  "watch": [
+    "*.js",
+    "*.json"
+  ],
+  "env": {
+  },
+  "ext": "js json"
+}
