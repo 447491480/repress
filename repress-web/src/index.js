@@ -1,8 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';
+import './index.css';
+
+let root = document.getElementById('root');
+
+ReactDOM.render(<App />, root);
+
+console.log('process.env.NODE_ENV', process.env.NODE_ENV);
+
+if (module.hot && process.env.NODE_ENV !== 'production') {
+    module.hot.accept('./App', () => {
+        ReactDOM.render(<App />, root);
+    });
+}
+
 registerServiceWorker();

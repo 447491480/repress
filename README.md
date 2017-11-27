@@ -10,13 +10,15 @@ repress 的定位：作为开发基础架构，结合前端和后端，为开发
 node.js + express + sequlize + jwt
 
 2，repress-admin : 管理后台
-﻿webpack + babel + postcss+less+es6/7+html5/css3
-react/react-native + react-router + redux + axios/fetch+antd
+﻿react + redux/react-redux + react-router/react-router-redux + redux-promise/rxjs/redux-observable + axios + antd
 
-3，toolkits/log-statistics : 日志分析,接口调用频度调用
+3，repress-web : 站点脚手架
+﻿react + redux/react-redux + react-router/react-router-redux + redux-promise/rxjs/redux-observable + axios + antd
+
+4，toolkits/log-statistics : 日志分析,接口调用频度调用
 elasticsearch+logstash+kibana
 
-4，部署和高可用
+5，部署和高可用
 nginx + mysql + mycat
 
 ```
