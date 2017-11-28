@@ -7,10 +7,10 @@ import {
     HashRouter as Router
 } from 'react-router-dom'
 
-import Home from '../pages/Home/index'
-import List from '../pages/List/index'
-import Detail from '../pages/Detail/index'
-import NotFound from '../pages/NotFound/index'
+import * as routeConfig from '../configs/routers';
+
+import Main from '../pages/Main'
+import Detail from '../pages/Detail'
 
 
 class AppRouteMap extends BaseComponent {
@@ -22,11 +22,8 @@ class AppRouteMap extends BaseComponent {
         return (
             <Router>
                 <Switch>
-                    <Route path="/" exact component={Home}/>
-                    <Route path="/home" component={Home}/>
-                    <Route path="/list" component={List}/>
-                    <Route path='/detail/:id' component={Detail}/>
-                    <Route path='*' component={NotFound}/>
+                    <Route path={routeConfig.MainRoute} exact component={Main}/>
+                    <Route path={routeConfig.DetailRoute} exact component={Detail}/>
                 </Switch>
             </Router>
         )

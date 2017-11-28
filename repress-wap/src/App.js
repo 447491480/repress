@@ -11,21 +11,6 @@ import AppRouter from './router/AppRouter';
 class App extends BaseComponent {
     constructor(props) {
         super(props);
-
-        if (process.env.NODE_ENV === 'production') {
-            global.console = {
-                info: () => {
-                },
-                log: () => {
-                },
-                warn: () => {
-                },
-                debug: () => {
-                },
-                error: () => {
-                },
-            };
-        }
     }
 
     store = store;
