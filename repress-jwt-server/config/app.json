@@ -1,0 +1,8 @@
+{
+  "default_area": "admin",
+  "default_controller": "page",
+  "default_action": "login",
+  "default_port":3080,
+  "admin_jwt_secret": "d9bd-4ced-be3f-5a007217fa78-c33607a87c0b-498b6",
+  "default_theme": "bootstrap"
+}

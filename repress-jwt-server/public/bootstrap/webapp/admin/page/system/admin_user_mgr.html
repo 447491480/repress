@@ -1,0 +1,73 @@
+<div id="admin_user_list_panel">
+    <h4 style="margin-top: 10px;">用户列表</h4>
+
+    <blockquote class="blockquote">
+        <div id="admin_user_mgr_ctrl_panel">
+            <button type="button" class="btn btn-primary">新增</button>
+        </div>
+    </blockquote>
+
+    <div id="admin_user_search_panel">
+
+        <input type="text" class="form-control" placeholder="用户名,支持模糊查询" style="width: 180px;display: inline-block;">
+
+        <button type="submit" class="btn btn-success" style="position: relative;top:-1px;">搜索</button>
+    </div>
+
+    <div style="margin-top: 10px;">
+        <table id="admin_user_list_grid" class="jqgrid-table"></table>
+        <div id="admin_user_list_grid_pager"></div>
+    </div>
+</div>
+
+<div id="admin_user_edit_panel" style="display: none;">
+    <h4 style="margin-top: 10px;">新增/修改用户</h4>
+    <blockquote class="blockquote">
+        <div>
+            <button class="btn btn-primary">返回用户列表</button>
+        </div>
+    </blockquote>
+
+    <div>
+        <div>
+            <label>账号</label>
+            <div >
+                <input type="text" class="form-control" name="account" autocomplete="off">
+            </div>
+        </div>
+
+        <div >
+            <label >密码</label>
+            <div >
+                <input type="text" class="form-control" name="password" autocomplete="off">
+            </div>
+        </div>
+
+        <div>
+            <label >菜单权限</label>
+            <div >
+                <ul id="admin_user_menu_tree" class="ztree"
+                    style="height: 200px;overflow-y: scroll;border:1px solid #e6e6e6;">
+
+                </ul>
+            </div>
+        </div>
+
+        <div >
+            <div style="margin-top: 10px;">
+                <button class="btn btn-primary">立即提交</button>
+                <button class="btn btn-default">重置</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    seajs.config({
+        alias: {},
+        debug: 0
+        // 0: 只输出少量信息 1：输出大量信息 2：对已加载的文件不进行缓存
+    });
+    seajs.use('webapp/admin/page/admin_user_mgr.js?'+Math.random(), function (i) {
+        i.init();
+    });
+</script>

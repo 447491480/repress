@@ -1,7 +1,6 @@
 import BaseComponent from '../components/BaseComponent'
 import React from 'react'
 import {
-    Redirect,
     Route,
     Switch,
     HashRouter as Router
@@ -31,7 +30,6 @@ class AppRouteMap extends BaseComponent {
             </Router>
         )
     }
-
 }
 
 export default AppRouteMap;

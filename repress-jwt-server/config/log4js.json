@@ -1,0 +1,44 @@
+{
+  "appenders": {
+    "out": {
+      "type": "console"
+    },
+    "project": {
+      "type": "dateFile",
+      "filename": "resources/logs/project",
+      "pattern": ".yyyy-MM-dd.log",
+      "alwaysIncludePattern": true,
+      "daysToKeep": 30
+    },
+    "error": {
+      "type": "dateFile",
+      "filename": "resources/logs/error",
+      "pattern": ".yyyy-MM-dd.log",
+      "alwaysIncludePattern": true,
+      "daysToKeep": 30
+    }
+  },
+  "categories": {
+    "default": {
+      "appenders": [
+        "out",
+        "project"
+      ],
+      "level": "info"
+    },
+    "project": {
+      "appenders": [
+        "out",
+        "project"
+      ],
+      "level": "info"
+    },
+    "error": {
+      "appenders": [
+        "out",
+        "error"
+      ],
+      "level": "info"
+    }
+  }
+}
