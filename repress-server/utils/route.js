@@ -21,7 +21,6 @@ route.bind = (app) => {
         // 开始遍历
         let controller = require(controllerFile);
         let pathInfo = this.splitPathInfo(controllerFile);
-        log4js.debug(pathInfo);
 
         for (let key in controller) {
             if (controller.hasOwnProperty(key)) {
@@ -52,9 +51,6 @@ route.bind = (app) => {
                 if (path !== false) {
                     this.bindRoute(app, path, middlewareFunctions, f, params);
 
-                    // log4js.debug(pathInfo);
-                    log4js.debug(path.path);
-
                     // 绑定默认路由
                     let defaultRouteArr = [this.defaultArea, this.defaultController, this.defaultAction].filter(s => s !== '');
                     let defaultRoute = '/' + defaultRouteArr.join('/');
@@ -81,7 +77,6 @@ route.bind = (app) => {
                         } else {
                             defaultRouteArr.shift();
                             defaultRouteArr.unshift(pathInfo.controller);
-                            log4js.debug(defaultRouteArr.filter(s => s !== '').join('/'));
                             if (path.path === '/' + defaultRouteArr.filter(s => s !== '').join('/')) {
                                 let defaultPath = {path: `/${pathInfo.controller}`, method: 'get'};
                                 this.bindRoute(app, defaultPath, middlewareFunctions, f, params);
