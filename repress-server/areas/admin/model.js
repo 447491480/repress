@@ -10,19 +10,19 @@ const config = configure.get('db');
 
 
 const model = module.exports;
-model.get_connectionList = [sessionFilter, function (req, res) {
+model.get_connectionList = [sessionFilter, (req, res) => {
     res.jsonWrap(Object.keys(db));
 }];
 
-model.get_dbTables = [sessionFilter, function (req, res) {
+model.get_dbTables = [sessionFilter, (req, res) => {
     let name = req.query.name || 'default';
     let pageLimit = pager.requestFilter(req);
     let keyword = req.query.keyword || '';
 
-    db[name].sequelize.getQueryInterface().showAllTables().then(function (ret) {
+    db[name].sequelize.getQueryInterface().showAllTables().then((ret) => {
         let retTemp = [];
         if (keyword) {
-            ret.forEach(function (o) {
+            ret.forEach( (o) => {
                 if (o.indexOf(keyword) >= 0) {
                     retTemp.push(o);
                 }
@@ -36,7 +36,7 @@ model.get_dbTables = [sessionFilter, function (req, res) {
     });
 }];
 
-model.post_genModels = [sessionFilter, function (req, res) {
+model.post_genModels = [sessionFilter, (req, res) => {
     let name = req.body.name || 'default';
 
     config[name]['tables'] = JSON.parse(req.body.tables || '[]');
@@ -47,7 +47,7 @@ model.post_genModels = [sessionFilter, function (req, res) {
 
     let auto = new SequelizeAuto(config[name].database, config[name].username, config[name].password, config[name]);
 
-    auto.run(function (err) {
+    auto.run((err) => {
         if (err) {
             console.log(err);
             res.jsonWrap(err, 1, err);

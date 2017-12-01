@@ -3,6 +3,7 @@
  */
 const userService = require('../../services/admin/user');
 const log4js = require('../../utils/log4js');
+const sessionFilter = require('../../filters/adminSessionFilter');
 
 const user = module.exports;
 user.get_checkUserLogin = (req, res) => {
@@ -10,32 +11,32 @@ user.get_checkUserLogin = (req, res) => {
     let password = req.query.password;
 
     if (!account && !password) {
-        res.jsonWrap(null, 1, '用户名或者密码不能为空');
+        return res.jsonWrap(null, 1, '用户名或者密码不能为空');
     }
 
-    userService.checkUserLogin(account, password, req).then(function (ret) {
+    userService.checkUserLogin(account, password, req).then((ret) => {
         console.log(ret);
 
         res.jsonWrap(ret);
-    }).catch(function (e) {
+    }).catch((e) => {
         log4js.error(e);
         res.jsonWrap(null, 2, e);
     });
 };
 
-user.get_query = (req, res) => {
+user.get_query = [sessionFilter, (req, res) => {
     let keyword = req.query.keyword || '';
     let pageLimit = pager.requestFilter(req);
 
-    userService.queryUser(pageLimit.page, pageLimit.limit, keyword).then(function (data) {
+    userService.queryUser(pageLimit.page, pageLimit.limit, keyword).then((data) => {
         res.jsonWrap(data);
-    }).catch(function (e) {
+    }).catch((e) => {
         log4js.error(e);
         res.jsonWrap(null, 1, e);
     });
-};
+}];
 
-user.post_save = (req, res) => {
+user.post_save = [sessionFilter, (req, res) => {
     let data = {
         account: req.body.account || '',
         password: req.body.password || '',
@@ -44,44 +45,44 @@ user.post_save = (req, res) => {
     };
 
     if (!data.account || !data.password) {
-        res.jsonWrap(null, 1, '用户名或者密码不能为空');
+        return res.jsonWrap(null, 1, '用户名或者密码不能为空');
     }
 
-    userService.saveUser(data).then(function (msg) {
+    userService.saveUser(data).then((msg) => {
         res.jsonWrap(msg);
-    }).catch(function (e) {
+    }).catch((e) => {
         log4js.error(e);
         res.jsonWrap(null, 1, e);
     });
-};
+}];
 
-user.get_delete = (req, res) => {
+user.get_delete = [sessionFilter, (req, res) => {
     let id = req.query.id;
-    userService.deleteUser(id).then(function (msg) {
+    userService.deleteUser(id).then((msg) => {
         res.jsonWrap(msg);
-    }).catch(function (e) {
+    }).catch((e) => {
         log4js.error(e);
         res.jsonWrap(null, 1, e);
     });
-};
+}];
 
-user.get_resetPassword = (req, res) => {
+user.get_resetPassword = [sessionFilter, (req, res) => {
     let old_pwd = req.query.old_pwd;
     let new_pwd = req.query.new_pwd;
     let new_pwd_confirm = req.query.new_pwd_confirm;
 
     if (!old_pwd || !new_pwd || !new_pwd_confirm) {
-        res.jsonWrap(null, 2, '输入项不能为空');
+        return res.jsonWrap(null, 2, '输入项不能为空');
     }
 
     if (new_pwd !== new_pwd_confirm) {
-        res.jsonWrap(null, 2, '两次输入的新密码不一致');
+        return res.jsonWrap(null, 2, '两次输入的新密码不一致');
     }
 
-    userService.resetPassword(req.session.admin_login_info.id, old_pwd, new_pwd).then(function (msg) {
+    userService.resetPassword(req.session.admin_login_info.id, old_pwd, new_pwd).then((msg) => {
         res.jsonWrap(msg);
-    }).catch(function (e) {
+    }).catch((e) => {
         log4js.error(e);
         res.jsonWrap(null, 1, e);
     });
-};
+}];

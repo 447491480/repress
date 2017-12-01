@@ -8,11 +8,11 @@ const log4js = require('../../utils/log4js');
 
 const page = module.exports;
 page.get_index = [sessionFilter, (req, res) => {
-    menuService.getUserMenu(req.session.admin_login_info.id).then(function (data) {
+    menuService.getUserMenu(req.session.admin_login_info.id).then( (data) => {
         // res.jsonWrap(data);
         // res.jsonWrap(req.session.admin_login_info);
         res.render('admin/admin.html',{data:data,account:req.session.admin_login_info.account});
-    }).catch(function(error) {
+    }).catch((error) => {
         console.log(error);
         res.jsonWrap(error,1,'服务器异常');
     });
