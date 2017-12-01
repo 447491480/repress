@@ -3,7 +3,7 @@
  */
 
 const userService = module.exports;
-userService.checkUserLogin = async function (account, password,req) {
+userService.checkUserLogin = async (account, password,req) => {
     let data = await(db().admin_user.findOne({
         where: {account: account, password: password}
     }));
@@ -16,7 +16,7 @@ userService.checkUserLogin = async function (account, password,req) {
     }
 };
 
-userService.saveUser = async function (data) {
+userService.saveUser = async (data) => {
     if (data.id) {
         let id = data.id;
         delete data['id'];
@@ -37,13 +37,13 @@ userService.saveUser = async function (data) {
     }
 };
 
-userService.deleteUser = async function (id) {
+userService.deleteUser = async (id) => {
     return await(db().admin_user.destroy({
         where: {id: id}
     }))
 };
 
-userService.queryUser = async function (page, limit, keyword) {
+userService.queryUser = async (page, limit, keyword) => {
     let offset = (page - 1) * limit;
 
     let whereCase = {};
@@ -60,7 +60,7 @@ userService.queryUser = async function (page, limit, keyword) {
     return pager.gridWrap(ret.rows, page, limit, ret.count);
 };
 
-userService.isAccountExist = async function (account) {
+userService.isAccountExist = async (account) => {
     return await(db().admin_user.count({
         where: {
             account: account
@@ -68,7 +68,7 @@ userService.isAccountExist = async function (account) {
     }));
 };
 
-userService.resetPassword = async function (id, oldpass, newpass) {
+userService.resetPassword = async (id, oldpass, newpass) => {
     if (oldpass == newpass) {
         throw '新密码不能和原始密码相同';
     }
