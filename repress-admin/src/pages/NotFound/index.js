@@ -1,5 +1,4 @@
 import BaseComponent from '../../components/BaseComponent'
-
 import React from 'react'
 
 class NotFound extends BaseComponent {

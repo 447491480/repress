@@ -138,7 +138,7 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
     //写错误日志
     let status = err.status || 500;
-    let errorMes = status + ' ' + err.message + '\n' + '[' + new Date() + '] [' + req.url + '] [' + err + ']';
+    let errorMes = status + ' ' + err.message + '\n' + '[' + req.method.toUpperCase() + '] [' + req.url + '] [' + err + ']';
 
     res.status(status);
 
