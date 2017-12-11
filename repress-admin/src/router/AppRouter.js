@@ -1,34 +1,35 @@
 import BaseComponent from '../components/BaseComponent'
 import React from 'react'
 import {
-    Redirect,
     Route,
     Switch,
     HashRouter as Router
 } from 'react-router-dom'
 
+import routes from './router';
 
-import Main from '../pages/Main'
-
-import NotFound from '../pages/NotFound/index'
-
+const RouteWithSubRoutes = (route) => (
+    <Route path={route.path} render={props => (
+        <route.component {...props} routes={route.routes}/>
+    )}/>
+);
 
 class AppRouteMap extends BaseComponent {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
     }
 
     render() {
         return (
             <Router>
                 <Switch>
-                    <Route path='*/' exact component={Main} />
-                    <Route path='*' component={NotFound} />
+                    {routes.map((route, i) => (
+                        <RouteWithSubRoutes key={i} {...route}/>
+                    ))}
                 </Switch>
             </Router>
         )
     }
-
 }
 
 export default AppRouteMap;
