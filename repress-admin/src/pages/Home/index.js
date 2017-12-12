@@ -3,7 +3,7 @@ import React from 'react'
 
 import {Layout,Button} from 'antd'
 
-class Main extends BaseComponent {
+class Home extends BaseComponent {
     constructor() {
         super();
     }
@@ -25,4 +25,4 @@ class Main extends BaseComponent {
     }
 }
 
-export default Main;
+export default Home;
