@@ -20,6 +20,8 @@ route.bind = (app) => {
     this.filterAreaDir().forEach((controllerFile) => {
         // 开始遍历
         let controller = require(controllerFile);
+
+        controllerFile = controllerFile.replace(/\\/gi,'/');
         let pathInfo = this.splitPathInfo(controllerFile);
 
         for (let key in controller) {
@@ -213,6 +215,7 @@ route.translateFunctionBodyToParameterArray = (f) => {
 
 route.translateRoutePath = (controllerFile, methodName, parameters) => {
     //Ensure that both strings are lower-case
+    this.areaDirectory = this.areaDirectory.replace(/\\/gi,'/');
     let baseRoute = controllerFile.replace(this.areaDirectory, '').replace(path.extname(controllerFile), '').toLowerCase();
 
     parameters = parameters || [];
