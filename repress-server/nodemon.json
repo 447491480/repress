@@ -2,8 +2,7 @@
   "restartable": "rs",
   "ignore": [
     ".git",
-    "sessions",
-    "logs",
+    ".idea",
     "node_modules",
     "public"
   ],
