@@ -39,47 +39,49 @@ app.use(function (req, res, next) {
     next();
 });
 
+// 跨域支持
+const cors = require('cors');
+app.use(cors());
+
+
+
 // 载入全局对象
 global.APP_PATH = process.cwd();
 global.db = require(path.join(APP_PATH, 'utils', 'db'));
 global.pager = require(path.join(APP_PATH, 'utils', 'pager'));
 global.helper = require(path.join(APP_PATH, 'utils', 'helper'));
 
-// 载入核心路由解析组件
-const resolve = require(path.join(APP_PATH, 'utils', 'route'));
-
 // 载入log4js自定义模块
 const log4js = require(path.join(APP_PATH, 'utils', 'log4js'));
+
+// 配置log4js
+app.use(log4js.useLog());
 
 // cookie
 const cookieParser = require('cookie-parser');
 
 // session
 const session = require('express-session');
-const fileSession = require('session-file-store')(session);
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // cookie处理
 app.use(cookieParser());
 
 // session处理
 app.use(session({
-    store: new fileSession({
-        path:path.join(APP_PATH,'resources','sessions'),
-        ttl: app_config['cookie_maxAge'] / 1000,
-        secret: app_config['session_secret']
+    store: new SequelizeStore({
+        db: global.db().sequelize,
+        checkExpirationInterval: 15 * 60 * 1000, // The interval at which to cleanup expired sessions in milliseconds.
+        expiration: 3 * 24 * 60 * 60 * 1000  // The maximum age (in milliseconds) of a valid session.
     }),
     secret: app_config['session_secret'],
     cookie: {maxAge: app_config['cookie_maxAge']},
-    resave: true,
-    saveUninitialized: true
+    resave: false, // we support the touch method so per the express-session docs this should be set to false
+    proxy: true // if you do SSL outside of node.
 }));
 
-// 跨域支持
-const cors = require('cors');
-app.use(cors());
-
-// 配置log4js
-app.use(log4js.useLog());
+// 载入核心路由解析组件
+const resolve = require(path.join(APP_PATH, 'utils', 'route'));
 
 // 设置视图引擎
 app.engine('html', ejs.__express);
@@ -92,8 +94,15 @@ app.use(express.static(path.join(APP_PATH, 'public')));
 app.use(favicon(path.join(APP_PATH, 'public', 'favicon.ico')));
 
 // 处理非get提交数据
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use( bodyParser.json({limit: '50mb'}) );
+app.use(bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true,
+    parameterLimit:50000
+}));
+
+// 处理 wechat 支付返回的xml格式字符串
+app.use(bodyParser.text({type:'*/xml'}));
 
 // 设置默认区域
 const defaultArea = app_config['default_area'];

@@ -4,6 +4,7 @@
 const moment = require('moment');
 const uuidV1 = require('uuid/v1');
 const uuidV4 = require('uuid/v4');
+const path = require('path');
 const md5 = require('md5');
 
 const helper = module.exports;

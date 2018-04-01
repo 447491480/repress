@@ -33,7 +33,7 @@ module.exports = {
     requestFilter : function(req) {
         let args = {};
         args.page = req.query.page || 1 ;
-        args.limit = req.query.limit || req.query.rows || 100 ;
+        args.limit = req.query.limit || req.query.rows || 1000 ;
 
         if(args.page <= 0) {
             args.page = 1;
@@ -41,8 +41,8 @@ module.exports = {
             args.page = parseInt(args.page);
         }
 
-        if(args.limit >= 100) {
-            args.limit = 100;
+        if(args.limit >= 1000) {
+            args.limit = 1000;
         } else {
             args.limit = parseInt(args.limit);
         }
